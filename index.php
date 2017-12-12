@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 
 $app = new Silex\Application();
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
+$app->register(new Silex\Provider\TwigServiceProvider(), ['twig.path' => __DIR__.'/src/Views',]);
 
 $app['connection'] = [
     'driver' => 'pdo_mysql',

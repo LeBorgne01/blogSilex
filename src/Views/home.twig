@@ -1,11 +1,11 @@
 {% extends 'layout.twig' %}
 {% block body %}
-	{% include 'nav.twig' %}
+	{% include 'menu.twig' %}
 	<h1>Bienvenue sur le site</h1>
 	<ul>
 		{% for article in articles %}
 			<li>
-				{{ article.getTitre() }}
+				<a class="lienArticle" href="{{ app.request.basepath }}/article/{{ article.getIdArticle() }}">{{ article.getTitre() }}</a>
 			</li>
 		{% endfor %}
 	</ul>

@@ -8,7 +8,7 @@ use Silex\Application;
 use DUT\Services\SessionStorage;
 use DUT\Models\Article;
 
-use DUT\Models\Article;
+
 use DUT\Models\Commentaire;
 
 class ItemsController {

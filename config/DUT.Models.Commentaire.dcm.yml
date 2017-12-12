@@ -1,0 +1,31 @@
+DUT\Models\Commentaire:
+  type: entity
+  table: commentaire
+
+  id:
+    idCommentaire:
+      type: integer
+      generator:
+        strategy: auto
+
+
+  fields:
+
+    idArticle:
+      type: integer
+      generator:
+         strategy: auto
+
+    nomEditeur:
+      type: string
+      lenght: 50
+      column: nomEditeur
+      nullable: false
+
+    contenuCommentaire:
+      type: string
+      lenght: 10000
+      column: contenuCommentaire
+      nullable: false
+
+    

@@ -13,7 +13,7 @@ $app['connection'] = [
     'host' => 'localhost',
     'user' => 'root',
     'password' => '',
-    'dbname' => 'dut'
+    'dbname' => 'blogsilex'
 ];
 
 $app['doctrine_config'] = Setup::createYAMLMetadataConfiguration([__DIR__ . '/config'], true);

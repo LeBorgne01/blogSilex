@@ -1,4 +1,12 @@
 {% extends 'layout.twig' %}
 {% block body %}
 	{% include 'nav.twig' %}
+	<h1>Bienvenue sur le site</h1>
+	<ul>
+		{% for article in articles %}
+			<li>
+				{{ article.getTitre() }}
+			</li>
+		{% endfor %}
+	</ul>
 {% endblock %}

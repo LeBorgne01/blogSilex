@@ -7,27 +7,24 @@ use Symfony\Component\HttpFoundation\Response;
 use Silex\Application;
 use DUT\Services\SessionStorage;
 
+use DUT\Models\Article;
+use DUT\Models\Commentaire;
+
 class ItemsController {
 
     protected $storage;
+    protected $entityManager;
 
     public function __construct() {
         $this->storage = new SessionStorage();
     }
 
-    public function listAction() {
-        $storage = new SessionStorage();
-        $html = '<h2>Home</h2>';
-        $html .= '<a href="create">Ajouter</a>';
-        $html .= '<ul>';
+    public function afficheHomePage(Application $app) {
+        $entityManager = $app['em'];
+        $research = $entityManager->getRepository('DUT\\Models\\Article');
+        $articles = $research->findAll();
 
-        foreach ($storage->getElements() as $index => $value) {
-            $html .= '<li>' . $value . ' <a href="remove/' . $index . '">Suppr.</a></li>';
-        }
-
-        $html .= '</li>';
-
-        return new Response($html);
+        return $app['twig']->render('home.twig', ['articles' => $articles]);
     }
 
     public function createAction(Request $request, Application $app) {

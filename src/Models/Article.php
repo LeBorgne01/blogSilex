@@ -1,4 +1,6 @@
 <?php 
+	namespace DUT\Models;
+	
 	class Article{
 		private $idArticle;
 		private $titre;

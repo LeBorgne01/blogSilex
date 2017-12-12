@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Silex\Application;
 use DUT\Services\SessionStorage;
-use DUT\Models\Article;
+
 
 use DUT\Models\Article;
 use DUT\Models\Commentaire;

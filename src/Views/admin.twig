@@ -1,14 +1,14 @@
 {% extends 'layout.twig' %}
 {% block body %}
 
-{% include 'nav.twig' %}
+{#{% include 'nav.twig' %}#}
 
 <h1>Modération</h1>
  
 <ul>
 	{% for item in articles %}  
 	<li>{{ item.getTitre() }} <a href="{{app.request.basepath}}/remove/{{item.getIdArticle()}}">Supprimer</a> 
-							<a href="{{app.request.basepath}}/modifier/{{item.getIdArticle()}}">Supprimer</a></li>
+							<a href="{{app.request.basepath}}/modifier/{{item.getIdArticle()}}">Modifier</a></li>
 	<li></li>
 	   {% endfor %}
 	

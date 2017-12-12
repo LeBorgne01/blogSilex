@@ -30,7 +30,7 @@ $app->get('/persons', function () use ($app) {
 /**
  * ROUTES
  */
-$app->get('/', 'DUT\\Controllers\\ItemsController::listAction')
+$app->get('/', 'DUT\\Controllers\\ItemsController::afficheHomePage')
     ->bind('home');
 
 $app->get('/create', 'DUT\\Controllers\\ItemsController::createAction');

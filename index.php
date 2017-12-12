@@ -34,11 +34,9 @@ $app->get('/persons', function () use ($app) {
 $app->get('/', 'DUT\\Controllers\\ItemsController::afficheHomePage')
     ->bind('home');
 
-$app->get('/create', 'DUT\\Controllers\\ItemsController::createAction');
-$app->post('/create', 'DUT\\Controllers\\ItemsController::createAction');
-
-$app->get('/remove/{index}', 'DUT\\Controllers\\ItemsController::deleteAction');
 $app->get('/admin', 'DUT\\Controllers\\ItemsController::afficheAdminPage');
+
+$app->get('/article/{idArticle}', 'DUT\\Controllers\\ItemsController::afficheArticlePage');
 
 $app['debug'] = true;
 $app->run();

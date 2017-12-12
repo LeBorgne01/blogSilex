@@ -28,31 +28,6 @@ class ItemsController {
         return $app['twig']->render('home.twig', ['articles' => $articles]);
     }
 
-    public function createAction(Request $request, Application $app) {
-        $name = $request->get('name', null);
-        $url = $app['url_generator']->generate('home');
-
-        if (!is_null($name)) {
-            $this->storage->addElement($name);
-
-            return $app->redirect($url);
-        }
-
-        $html = '<h2>Ajouter</h2><form action="create" method="post">';
-        $html .= '<label for="input">Nom</label><input id="input" type="text" name="name">';
-        $html .= '<button>Valider</button></form>';
-
-        return new Response($html);
-    }
-
-    public function deleteAction($index, Application $app) {
-        $this->storage->removeElement($index);
-
-        $url = $app['url_generator']->generate('home');
-
-        return $app->redirect($url);
-    }
-
     public function afficheAdminPage(Application $app){
          $entityManager = $app['em'];
         $items = $entityManager->getRepository('DUT\\Models\\Article');
@@ -60,5 +35,10 @@ class ItemsController {
 
           return $app['twig']->render('admin.twig', ['articles' => $resultat]);
 
+    }
+
+    public function afficheArticlePage(Application $app){
+        
+        return $app['twig']->render('article.twig');
     }
 }

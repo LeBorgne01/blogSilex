@@ -13,8 +13,9 @@ DUT\Models\Commentaire:
 
     idArticle:
       type: integer
-      generator:
-         strategy: auto
+      lenght: 11
+      column: idArticle
+         nullable: false
 
     nomEditeur:
       type: string

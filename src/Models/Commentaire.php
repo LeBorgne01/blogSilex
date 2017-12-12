@@ -1,4 +1,5 @@
 <?php
+	namespace DUT\Models;
 	
 	class Commentaire 
 	{

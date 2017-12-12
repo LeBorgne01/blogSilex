@@ -38,6 +38,7 @@ $app->get('/create', 'DUT\\Controllers\\ItemsController::createAction');
 $app->post('/create', 'DUT\\Controllers\\ItemsController::createAction');
 
 $app->get('/remove/{index}', 'DUT\\Controllers\\ItemsController::deleteAction');
+$app->get('/admin', 'DUT\\Controllers\\ItemsController::afficheAdminPage');
 
 $app['debug'] = true;
 $app->run();

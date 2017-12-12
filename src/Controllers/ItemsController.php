@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Silex\Application;
 use DUT\Services\SessionStorage;
+use DUT\Models\Article;
 
 class ItemsController {
 
@@ -53,5 +54,14 @@ class ItemsController {
         $url = $app['url_generator']->generate('home');
 
         return $app->redirect($url);
+    }
+
+    public function afficheAdminPage(Application $app){
+         $entityManager = $app['em'];
+        $items = $entityManager->getRepository('DUT\\Models\\Article');
+        $resultat = $items->findAll();
+
+          return $app['twig']->render('admin.twig', ['articles' => $resultat]);
+
     }
 }

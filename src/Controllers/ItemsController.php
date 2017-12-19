@@ -81,4 +81,43 @@ class ItemsController {
         
         return $app['twig']->render('article.twig', ['article' => $article , 'commentaires' => $commentaires]);
     }
+
+     public function deleteAction($idArticle, Application $app) {
+       // $this->storage->removeElement($index);
+        $em = $app['em'];
+        $itemToRemove = $em->find('DUT\\Models\\Article', $idArticle);
+        $em->remove($itemToRemove);
+        $em->flush();
+
+        $url = $app['url_generator']->generate('admin');
+
+        return $app->redirect($url);
+    }
+
+
+     public function modifier($idArticle, Application $app) {
+       // $this->storage->removeElement($index);
+        $em = $app['em'];
+        $itemToReturn = $em->find('DUT\\Models\\Article', $idArticle);
+        
+
+        return $app['twig']->render('modifierArticle.twig',['article'=>$itemToReturn]);
+
+        
+    }
+
+    public function modifierContenuArticle($idArticle, Application $app) {
+       // $this->storage->removeElement($index);
+        $em = $app['em'];
+        $itemToReturn = $em->find('DUT\\Models\\Article', $idArticle);
+
+        
+        
+
+        return $app['twig']->render('modifierArticle.twig',['article'=>$itemToReturn]);
+
+        
+    }
+
+
 }

@@ -34,11 +34,14 @@ $app->get('/persons', function () use ($app) {
 $app->get('/', 'DUT\\Controllers\\ItemsController::afficheHomePage')
     ->bind('home');
 
-$app->get('/admin', 'DUT\\Controllers\\ItemsController::afficheAdminPage');
+$app->get('/admin', 'DUT\\Controllers\\ItemsController::afficheAdminPage')
+	->bind('admin');
 
 $app->get('/article/{idArticle}', 'DUT\\Controllers\\ItemsController::afficheArticlePage');
 $app->post('/article/{idArticle}', 'DUT\\Controllers\\ItemsController::afficheArticlePage');
 
+
+$app->get('/remove/{idArticle}', 'DUT\\Controllers\\ItemsController::deleteAction');
 
 $app['debug'] = true;
 $app->run();

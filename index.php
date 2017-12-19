@@ -37,6 +37,8 @@ $app->get('/', 'DUT\\Controllers\\ItemsController::afficheHomePage')
 $app->get('/admin', 'DUT\\Controllers\\ItemsController::afficheAdminPage');
 
 $app->get('/article/{idArticle}', 'DUT\\Controllers\\ItemsController::afficheArticlePage');
+$app->post('/article/{idArticle}', 'DUT\\Controllers\\ItemsController::afficheArticlePage');
+
 
 $app['debug'] = true;
 $app->run();

@@ -29,7 +29,7 @@ class ItemsController {
     }
 
     public function afficheAdminPage(Application $app){
-         $entityManager = $app['em'];
+        $entityManager = $app['em'];
         $items = $entityManager->getRepository('DUT\\Models\\Article');
         $resultat = $items->findAll();
 
@@ -37,8 +37,48 @@ class ItemsController {
 
     }
 
-    public function afficheArticlePage(Application $app){
+    public function afficheArticlePage($idArticle, Request $request, Application $app){
+        $entityManager = $app['em'];
+
+        //On va d'abord chercher l'article en question dans la BD
+        $research = $entityManager->getRepository('DUT\\Models\\Article');
+        $article = $research->findBy(['idArticle' => $idArticle]);
+        $article = $article[0];
+
+        //Ensuite on va aller chercher tous les commentaires sur cet article
+        $research = $entityManager->getRepository('DUT\\Models\\Commentaire');
+        $commentaires = $research->findBy(['idArticle' => $idArticle]);
+
+
+        //On va chercher les champs du formulaire
+        $nomEditeur = $request->get('nomEditeur', null);
+        $contenuCommentaire = $request->get('contenuCommentaire',null);
+
+
+        //On traite le formulaire
+        if(!is_null($nomEditeur) && !is_null($contenuCommentaire)){
+            //On sécurise les deux champs du formulaire
+            $nomEditeur = htmlspecialchars($nomEditeur);
+            $contenuCommentaire = htmlspecialchars($contenuCommentaire);
+
+            //On vérifie la tailles des champs
+            if(strlen($nomEditeur)<=50 && strlen($contenuCommentaire)<=10000){
+                $commentaireToAdd = new Commentaire(null,$idArticle,$nomEditeur,$contenuCommentaire);
+                $entityManager->persist($commentaireToAdd);
+                $entityManager->flush();
+
+                //On actualise les variables $article et $commentaires
+               
+                $research = $entityManager->getRepository('DUT\\Models\\Article');
+                $article = $research->findBy(['idArticle' => $idArticle]);
+                $article = $article[0];
+
+                $research = $entityManager->getRepository('DUT\\Models\\Commentaire');
+                $commentaires = $research->findBy(['idArticle' => $idArticle]);
+            }
+        }
+
         
-        return $app['twig']->render('article.twig');
+        return $app['twig']->render('article.twig', ['article' => $article , 'commentaires' => $commentaires]);
     }
 }

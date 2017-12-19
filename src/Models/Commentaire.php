@@ -8,12 +8,12 @@
 		private $nomEditeur;
 		private $contenuCommentaire;
 
-		function __construct($idCommentaire,$idArticle,$nomEditeur,$ContenuCommentaire)
+		function __construct($_idCommentaire,$_idArticle,$_nomEditeur,$_contenuCommentaire)
 		{
 			$this->idCommentaire=$_idCommentaire;
 			$this->idArticle=$_idArticle;
 			$this->nomEditeur=$_nomEditeur;
-			$this->contenuCommentaire=$_contenurCommentaire;
+			$this->contenuCommentaire=$_contenuCommentaire;
 			
 		}
 

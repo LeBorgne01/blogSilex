@@ -15,7 +15,7 @@ DUT\Models\Commentaire:
       type: integer
       lenght: 11
       column: idArticle
-         nullable: false
+      nullable: false
 
     nomEditeur:
       type: string

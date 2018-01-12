@@ -8,7 +8,13 @@
 
 <form action="form_modifierContenuArticle.php" method="post">
 
-<input type="text" name="requete" value={{ article.getContenuArticle() }}><br>;
+<textarea name="contenuArticle"
+   rows="10" cols="50">
+ {{ article.getContenuArticle() }}
+</textarea>
+
+
+<input type="hidden" name="idArticle" value={{article.getIdArticle()}}>
 <input type="submit" value="Valider" />
 
 </form>

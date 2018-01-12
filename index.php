@@ -43,5 +43,14 @@ $app->post('/article/{idArticle}', 'DUT\\Controllers\\ItemsController::afficheAr
 
 $app->get('/remove/{idArticle}', 'DUT\\Controllers\\ItemsController::deleteAction');
 
+$app->get('/modifier/{idArticle}', 'DUT\\Controllers\\ItemsController::modifier');
+
+$app->get('/modifier/{idArticle}', function()use($app){
+     return $app['twig']->render('modifierArticle.twig');
+
+});
+
+$app->post('/modifier/{idArticle}', 'DUT\\Controllers\\ItemsController::modifierContenuArticle');
+
 $app['debug'] = true;
 $app->run();

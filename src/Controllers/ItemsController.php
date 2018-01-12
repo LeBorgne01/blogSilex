@@ -68,23 +68,25 @@ class ItemsController {
     }
 
      public function modifierContenuArticle(Request $request, Application $app) {
-       
+        $em = $app['em'];
         $url = $app['url_generator']->generate('admin');
         $idArticle=$request->get("idArticle");
         $itemToModify = $em->find('DUT\\Models\\Article', $idArticle);
+        $newContenuArticle=$request->get("contenuArticle");
+
+        var_dump($idArticle);
 
         if (!is_null($request)) {
-            if () {
-                # code...
-            }
-            
-            $entityManager = $app['em'];
-            
-
-            $entityManager->persist($newContent);
-            $entityManager->flush();
+          if (strlen($newContenuArticle)<65000) {
+            $itemToModify->setContenuArticle($newContenuArticle);
+        
+            $em->persist($itemToModify);
+            $em->flush();
 
             return $app->redirect($url);
+                
+           }
+            
         }
     }
 

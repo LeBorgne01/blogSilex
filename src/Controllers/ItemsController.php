@@ -11,6 +11,7 @@ use DUT\Services\SessionStorage;
 
 use DUT\Models\Commentaire;
 use DUT\Models\Article;
+use DUT\Models\Citation;
 
 class ItemsController {
 
@@ -147,8 +148,14 @@ class ItemsController {
     }
 
     public function afficheCitationPage(Application $app){
+        $entityManager = $app['em'];
 
-        return $app['twig']->render('citation.twig');
+        //On récupère les citations de la base de données
+        $repository = $entityManager->getRepository('DUT\\Models\\Citation');
+        $citations = $repository->findAll();
+
+        
+        return $app['twig']->render('citation.twig', ['citations' => $citations]);
     }
 
 

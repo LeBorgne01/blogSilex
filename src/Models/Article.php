@@ -16,6 +16,7 @@
 			$this->lienPhoto = $_lienPhoto;
 		}
 
+		//Getters
 		public function getIdArticle(){
 			return $this->idArticle;
 		}
@@ -36,6 +37,9 @@
 			return $this->lienPhoto;
 		}
 
+		//fin getters
+
+		//Setters
 		public function setIdArticle($_idArticle){
 			$this->idArticle = $_idArticle;
 		}
@@ -55,5 +59,7 @@
 		public function setLienPhoto($_lienPhoto){
 			$this->lienPhoto = $_lienPhoto;
 		}
+
+		//fin setters
 	}
 ?>

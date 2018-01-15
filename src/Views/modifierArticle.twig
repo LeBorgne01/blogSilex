@@ -12,6 +12,16 @@
  {{ article.getContenuArticle() }}
 </textarea>
 
+<ul>
+	{% for commentaire in commentaires %}  
+	<li>{{ commentaire.getContenuCommentaire() }}  <a href="{{app.request.basepath}}/modererCommentaire/{{commentaire.getIdCommentaire()}}">Moderer</a>  <a href="{{app.request.basepath}}/removeCommentaire/{{commentaire.getIdCommentaire()}}">Supprimer</a> 
+		
+	</li>
+
+	{% endfor %}
+	
+</ul> 
+
 <input type="submit" value="Valider" />
 
 </form>

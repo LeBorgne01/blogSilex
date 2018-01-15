@@ -42,13 +42,15 @@ $app->post('/article/{idArticle}', 'DUT\\Controllers\\ItemsController::afficheAr
 
 
 $app->get('/remove/{idArticle}', 'DUT\\Controllers\\ItemsController::deleteAction');
-
+$app->get('/removeCommentaire/{idCommentaire}', 'DUT\\Controllers\\ItemsController::deleteCommentaire');
+$app->get('/modererCommentaire/{idCommentaire}', 'DUT\\Controllers\\ItemsController::modererCommentaire');
 
 $app->get('/ajout_article', 'DUT\\Controllers\\ItemsController::ajoutArticle')
     ->bind('ajout_article');
 $app->post('/ajout_article', 'DUT\\Controllers\\ItemsController::ajoutArticle');
 
 $app->get('/modifier/{idArticle}', 'DUT\\Controllers\\ItemsController::modifierContenuArticle');
+     
 $app->post('/modifier/{idArticle}', 'DUT\\Controllers\\ItemsController::modifierContenuArticle');
 
 $app->get('/citations', 'DUT\\Controllers\\ItemsController::afficheCitationPage')

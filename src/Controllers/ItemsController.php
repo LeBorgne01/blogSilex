@@ -31,16 +31,16 @@ class ItemsController {
     }
 
     public function afficheAdminPage(Application $app){
-       $entityManager = $app['em'];
-       $items = $entityManager->getRepository('DUT\\Models\\Article');
-       $resultat = $items->findAll();
+     $entityManager = $app['em'];
+     $items = $entityManager->getRepository('DUT\\Models\\Article');
+     $resultat = $items->findAll();
 
-       return $app['twig']->render('admin.twig', ['articles' => $resultat]);
+     return $app['twig']->render('admin.twig', ['articles' => $resultat]);
 
-   }
+ }
 
 
-   public function afficheArticlePage($idArticle, Request $request, Application $app){
+ public function afficheArticlePage($idArticle, Request $request, Application $app){
     $entityManager = $app['em'];
     $repository = $entityManager->getRepository('DUT\\Models\\Commentaire');
 
@@ -70,23 +70,7 @@ class ItemsController {
 
     return $app['twig']->render('article.twig', ['article' => $article, 'commentaires' => $commentaires]);
 
-<<<<<<< HEAD
-
 }
-
-
-
-=======
-            return $app->redirect($idArticle);
-        }
-        
-        return $app['twig']->render('article.twig', ['article' => $article, 'commentaires' => $commentaires]);
-    }
-
->>>>>>> 62d4ab25141a6a7c844e996a4818f4925965d8d3
-
-
-
 
 public function deleteAction($idArticle, Application $app) {
        // $this->storage->removeElement($index);
@@ -100,6 +84,29 @@ public function deleteAction($idArticle, Application $app) {
     return $app->redirect($url);
 }
 
+public function deleteCommentaire($idCommentaire, Application $app) {
+       // $this->storage->removeElement($index);
+    $em = $app['em'];
+    $itemToRemove = $em->find('DUT\\Models\\Commentaire', $idCommentaire);
+    $em->remove($itemToRemove);
+    $em->flush();
+
+    $url = $app['url_generator']->generate('admin');
+
+    return $app->redirect($url);
+}
+public function modererCommentaire($idCommentaire, Application $app) {
+       // $this->storage->removeElement($index);
+    $em = $app['em'];
+    $itemToModify = $em->find('DUT\\Models\\Commentaire', $idCommentaire);
+    $itemToModify->setContenuCommentaire("Ce commentaire à été modéré");
+    $em->persist($itemToModify);
+    $em->flush();
+
+    $url = $app['url_generator']->generate('admin');
+
+    return $app->redirect($url);
+}
 
 public function modifier($idArticle, Application $app) {
        // $this->storage->removeElement($index);
@@ -112,55 +119,41 @@ public function modifier($idArticle, Application $app) {
 
 }
 
-<<<<<<< HEAD
-public function modifierContenuArticle(Request $request, Application $app) {
-    $em = $app['em'];
-    $url = $app['url_generator']->generate('admin');
-    $idArticle=$request->get("idArticle");
-    $itemToModify = $em->find('DUT\\Models\\Article', $idArticle);
-    $newContenuArticle=$request->get("contenuArticle");
 
-    var_dump($idArticle);
 
-    if (!is_null($request)) {
-      if (strlen($newContenuArticle)<65000) {
-        $itemToModify->setContenuArticle($newContenuArticle);
-        
-        $em->persist($itemToModify);
-        $em->flush();
-
-        return $app->redirect($url);
-
-=======
-     public function modifierContenuArticle($idArticle, Request $request, Application $app) {
-        $entityManager = $app['em'];
+public function modifierContenuArticle($idArticle, Request $request, Application $app) {
+    $entityManager = $app['em'];
 
         //On récupère l'article correspondant à l'Id 
-        $articleAModifier = $entityManager->find('DUT\\Models\\Article', $idArticle);
+    $articleAModifier = $entityManager->find('DUT\\Models\\Article', $idArticle);
+
+    $repository = $entityManager->getRepository('DUT\\Models\\Commentaire');
+    $commentaires = $repository->findBy(['idArticle' => $idArticle]);
+    //var_dump($commentaireAssocie);
 
         //On récupère les données du formulaire
-        $contenuArticleModifie = $request->get('contenuArticle', null);
+    $contenuArticleModifie = $request->get('contenuArticle', null);
 
-        if(!is_null($contenuArticleModifie)){
+    if(!is_null($contenuArticleModifie)){
             //On regarde si le contenu de l'article est inférieur à 65000 caratères (taille max de la base de données)
-            if(strlen($contenuArticleModifie)<65000){
-                $articleAModifier->setContenuArticle($contenuArticleModifie);
-        
-                $entityManager->persist($articleAModifier);
-                $entityManager->flush();
+        if(strlen($contenuArticleModifie)<65000){
+            $articleAModifier->setContenuArticle($contenuArticleModifie);
 
-                $url = $app['url_generator']->generate('admin');
-                return $app->redirect($url); 
-            }
-            
+            $entityManager->persist($articleAModifier);
+            $entityManager->flush();
+
+            $url = $app['url_generator']->generate('admin');
+            return $app->redirect($url); 
         }
 
-        return $app['twig']->render('modifierArticle.twig', ['article' => $articleAModifier]);
->>>>>>> 62d4ab25141a6a7c844e996a4818f4925965d8d3
     }
 
+    return $app['twig']->render('modifierArticle.twig', ['article' => $articleAModifier, 'commentaires' => $commentaires]);
+
 }
-}
+
+
+
 
 public function ajoutArticle(Request $request, Application $app){
     $entityManager = $app['em'];
@@ -220,36 +213,36 @@ public function afficheCitationPage(Request $request, Application $app){
     return $app['twig']->render('citation.twig', ['citations' => $citations]);
 }
 
-    public function ajoutCitation(Request $request, Application $app){
-        $entityManager = $app['em'];
+public function ajoutCitation(Request $request, Application $app){
+    $entityManager = $app['em'];
 
         //On récupère les champs du formulaire
-        $contenuCitation = $request->get('contenuCitation', null);
-        $lienVideoCitation = $request->get('lienVideoCitation', null);
+    $contenuCitation = $request->get('contenuCitation', null);
+    $lienVideoCitation = $request->get('lienVideoCitation', null);
 
-        if(!is_null($contenuCitation) && !is_null($lienVideoCitation)){
+    if(!is_null($contenuCitation) && !is_null($lienVideoCitation)){
             //On sécurise les données récupérées
-            $contenuCitation = htmlspecialchars($contenuCitation);
-            $lienVideoCitation = htmlspecialchars($lienVideoCitation);
+        $contenuCitation = htmlspecialchars($contenuCitation);
+        $lienVideoCitation = htmlspecialchars($lienVideoCitation);
 
             //On récupère l'id de la vidéo youtube (méthode simple sans vérification d'url)
-            $lienVideoCitation = explode('=', $lienVideoCitation);
-            $lienVideoCitation = "https://www.youtube.com/embed/".$lienVideoCitation[1];
+        $lienVideoCitation = explode('=', $lienVideoCitation);
+        $lienVideoCitation = "https://www.youtube.com/embed/".$lienVideoCitation[1];
 
             //On crée une nouvelle citation
-            $nouvelleCitation = new Citation(null,$contenuCitation,$lienVideoCitation,0);
+        $nouvelleCitation = new Citation(null,$contenuCitation,$lienVideoCitation,0);
 
             //On l'ajoute à la base de données
-            $entityManager->persist($nouvelleCitation);
-            $entityManager->flush();
+        $entityManager->persist($nouvelleCitation);
+        $entityManager->flush();
 
-            $url = $app['url_generator']->generate('citations');
-            return $app->redirect($url);
-        }
-
-
-        return $app['twig']->render('ajouterCitation.twig');
+        $url = $app['url_generator']->generate('citations');
+        return $app->redirect($url);
     }
+
+
+    return $app['twig']->render('ajouterCitation.twig');
+}
 
 
 }

@@ -17,8 +17,13 @@
 	<!-- header -->
 	<header>
 		{# <p>Je suis le header</p> #}
+{#
+		<div id= "logoImage">
+		<a href = "{{app.request.basepath}}/" title = "Logo OSS 117"><img src ="{{app.request.basepath}}/src/Views/pictures/logoImage.jpg"></a>
+		</div>
+#}		
+		 <img id="logoImage"  src="{{app.request.basepath}}/src/Views/pictures/logoImage.jpg"/>  
 		
-		<img id="logoImage" src="{{app.request.basepath}}/src/Views/pictures/logoImage.jpg"/>
 		<h1 id="titrePrincipal">Blog OSS 117</h1>
 	
 	</header>

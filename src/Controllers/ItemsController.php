@@ -37,41 +37,31 @@ class ItemsController {
 
      return $app['twig']->render('admin.twig', ['articles' => $resultat]);
 
-<<<<<<< HEAD
  }
 
 
  public function afficheArticlePage($idArticle, Request $request, Application $app){
     $entityManager = $app['em'];
     $repository = $entityManager->getRepository('DUT\\Models\\Commentaire');
-=======
-    }
-
-
-    public function afficheArticlePage($idArticle, Request $request, Application $app){
-        $entityManager = $app['em'];
-        $repository = $entityManager->getRepository('DUT\\Models\\Commentaire');
->>>>>>> e3fb91af0203c77e6d40095cd1c865931c4b80aa
 
         //On va chercher dans la base l'article correspondant ainsi que ses commentaires
-        $article = $entityManager->find('DUT\\Models\\Article', $idArticle);
-        $commentaires = $repository->findBy(['idArticle' => $idArticle]);
+    $article = $entityManager->find('DUT\\Models\\Article', $idArticle);
+    $commentaires = $repository->findBy(['idArticle' => $idArticle]);
 
         //Pour le formulaire
         //On stock les variables des champs
-        $nomEditeur = $request->get('nomEditeur', null);
-        $contenuCommentaire = $request->get('contenuCommentaire', null);
+    $nomEditeur = $request->get('nomEditeur', null);
+    $contenuCommentaire = $request->get('contenuCommentaire', null);
 
-        if(!is_null($nomEditeur) && !is_null($contenuCommentaire)){
+    if(!is_null($nomEditeur) && !is_null($contenuCommentaire)){
             //On sécurise les données des champs
-            $nomEditeur = htmlspecialchars($nomEditeur);
-            $contenuCommentaire = htmlspecialchars($contenuCommentaire);
+        $nomEditeur = htmlspecialchars($nomEditeur);
+        $contenuCommentaire = htmlspecialchars($contenuCommentaire);
 
             //On crée un nouveau commentaire
-            $commentaire = new Commentaire(null, $idArticle, $nomEditeur, $contenuCommentaire);
+        $commentaire = new Commentaire(null, $idArticle, $nomEditeur, $contenuCommentaire);
 
             //On enregistre ce commentaire dans la base de données
-<<<<<<< HEAD
         $entityManager->persist($commentaire);
         $entityManager->flush();
 
@@ -109,7 +99,7 @@ public function modererCommentaire($idCommentaire, Application $app) {
        // $this->storage->removeElement($index);
     $em = $app['em'];
     $itemToModify = $em->find('DUT\\Models\\Commentaire', $idCommentaire);
-    $itemToModify->setContenuCommentaire("Ce commentaire à été modéré");
+    $itemToModify->setContenuCommentaire("Ce commentaire à été modéré par l'administrateur.");
     $em->persist($itemToModify);
     $em->flush();
 
@@ -133,34 +123,6 @@ public function modifier($idArticle, Application $app) {
 
 public function modifierContenuArticle($idArticle, Request $request, Application $app) {
     $entityManager = $app['em'];
-=======
-            $entityManager->persist($commentaire);
-            $entityManager->flush();
-
-            return $app->redirect($idArticle);
-        }
-
-        return $app['twig']->render('article.twig', ['article' => $article, 'commentaires' => $commentaires]);
-    }
-
-
-    public function deleteAction($idArticle, Application $app) {
-        // $this->storage->removeElement($index);
-        $em = $app['em'];
-        $itemToRemove = $em->find('DUT\\Models\\Article', $idArticle);
-        $em->remove($itemToRemove);
-        $em->flush();
-
-        $url = $app['url_generator']->generate('admin');
-
-        return $app->redirect($url);
-    }
-
-
-    public function modifierContenuArticle($idArticle, Request $request, Application $app) {
-
-        $entityManager = $app['em'];
->>>>>>> e3fb91af0203c77e6d40095cd1c865931c4b80aa
 
         //On récupère l'article correspondant à l'Id 
     $articleAModifier = $entityManager->find('DUT\\Models\\Article', $idArticle);
@@ -184,7 +146,6 @@ public function modifierContenuArticle($idArticle, Request $request, Application
             return $app->redirect($url); 
         }
 
-<<<<<<< HEAD
     }
 
     return $app['twig']->render('modifierArticle.twig', ['article' => $articleAModifier, 'commentaires' => $commentaires]);
@@ -196,69 +157,61 @@ public function modifierContenuArticle($idArticle, Request $request, Application
 
 public function ajoutArticle(Request $request, Application $app){
     $entityManager = $app['em'];
-=======
-        return $app['twig']->render('modifierArticle.twig', ['article' => $articleAModifier]);
-
-    }
-
-
-    public function ajoutArticle(Request $request, Application $app){
-        $entityManager = $app['em'];
->>>>>>> e3fb91af0203c77e6d40095cd1c865931c4b80aa
 
         //On récupère les champs du formulaire
-        $titreArticle = $request->get("titreArticle", null);
-        $contenuArticle = $request->get("contenuArticle", null);
-        $tagArticle = $request->get("tagArticle", null);
+    $titreArticle = $request->get("titreArticle", null);
+    $contenuArticle = $request->get("contenuArticle", null);
+    $tagArticle = $request->get("tagArticle", null);
 
-        if(!is_null($titreArticle) && !is_null($contenuArticle)){
+    if(!is_null($titreArticle) && !is_null($contenuArticle)){
             //On sécurise les données récupérées
-            $titreArticle = htmlspecialchars($titreArticle);
-            $contenuArticle = htmlspecialchars($contenuArticle);
-            $tagArticle = htmlspecialchars($tagArticle);
+        $titreArticle = htmlspecialchars($titreArticle);
+        $contenuArticle = htmlspecialchars($contenuArticle);
+        $tagArticle = htmlspecialchars($tagArticle);
 
             //On crée un nouvel article
-            $article = new Article(null, $titreArticle, $contenuArticle, $tagArticle, null);
+        $article = new Article(null, $titreArticle, $contenuArticle, $tagArticle, null);
 
             //On l'insère dans la base
-            $entityManager->persist($article);
-            $entityManager->flush();
+        $entityManager->persist($article);
+        $entityManager->flush();
 
-            $url = $app['url_generator']->generate('home');
+        $url = $app['url_generator']->generate('home');
 
-            return $app->redirect($url);
-        }
-
-        return $app['twig']->render('ajouterArticle.twig');
+        return $app->redirect($url);
     }
 
-    public function afficheCitationPage(Request $request, Application $app){
-        $entityManager = $app['em'];
+    return $app['twig']->render('ajouterArticle.twig');
+}
+
+public function afficheCitationPage(Request $request, Application $app){
+    $entityManager = $app['em'];
 
         //On récupère les citations de la base de données
-        $repository = $entityManager->getRepository('DUT\\Models\\Citation');
-        $citations = $repository->findAll();
+    $repository = $entityManager->getRepository('DUT\\Models\\Citation');
+    $citations = $repository->findAll();
 
         //On récupère l'Id de la citation
-        $idCitation = $request->get("idCitation");
+    $idCitation = $request->get("idCitation");
 
-        if(!is_null($idCitation)){
+    if(!is_null($idCitation)){
             //On récupère la citation en question
-            $citationModifiee = $repository->findOneBy(['idCitation' => $idCitation]);
+        $citationModifiee = $repository->findOneBy(['idCitation' => $idCitation]);
 
             //On lui ajoute un j'aime
-            $citationModifiee->ajouterUnAime();
+        $citationModifiee->ajouterUnAime();
 
             //On met à jour la base de données
-            $entityManager->persist($citationModifiee);
-            $entityManager->flush();
+        $entityManager->persist($citationModifiee);
+        $entityManager->flush();
 
-            $url = $app['url_generator']->generate('citations');
-            return $app->redirect($url);
-        }
-
-        return $app['twig']->render('citation.twig', ['citations' => $citations]);
+        $url = $app['url_generator']->generate('citations');
+        return $app->redirect($url);
     }
+
+
+    return $app['twig']->render('citation.twig', ['citations' => $citations]);
+}
 
 public function ajoutCitation(Request $request, Application $app){
     $entityManager = $app['em'];

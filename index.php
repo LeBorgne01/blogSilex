@@ -48,13 +48,7 @@ $app->get('/ajout_article', 'DUT\\Controllers\\ItemsController::ajoutArticle')
     ->bind('ajout_article');
 $app->post('/ajout_article', 'DUT\\Controllers\\ItemsController::ajoutArticle');
 
-$app->get('/modifier/{idArticle}', 'DUT\\Controllers\\ItemsController::modifier');
-
-/*$app->get('/modifier/{idArticle}', function()use($app){
-     return $app['twig']->render('modifierArticle.twig');
-
-});*/
-
+$app->get('/modifier/{idArticle}', 'DUT\\Controllers\\ItemsController::modifierContenuArticle');
 $app->post('/modifier/{idArticle}', 'DUT\\Controllers\\ItemsController::modifierContenuArticle');
 
 $app->get('/citations', 'DUT\\Controllers\\ItemsController::afficheCitationPage')

@@ -96,27 +96,30 @@ class ItemsController {
         
     }
 
-     public function modifierContenuArticle(Request $request, Application $app) {
-        $em = $app['em'];
-        $url = $app['url_generator']->generate('admin');
-        $idArticle=$request->get("idArticle");
-        $itemToModify = $em->find('DUT\\Models\\Article', $idArticle);
-        $newContenuArticle=$request->get("contenuArticle");
+     public function modifierContenuArticle($idArticle, Request $request, Application $app) {
+        $entityManager = $app['em'];
 
-        var_dump($idArticle);
+        //On récupère l'article correspondant à l'Id 
+        $articleAModifier = $entityManager->find('DUT\\Models\\Article', $idArticle);
 
-        if (!is_null($request)) {
-          if (strlen($newContenuArticle)<65000) {
-            $itemToModify->setContenuArticle($newContenuArticle);
+        //On récupère les données du formulaire
+        $contenuArticleModifie = $request->get('contenuArticle', null);
+
+        if(!is_null($contenuArticleModifie)){
+            //On regarde si le contenu de l'article est inférieur à 65000 caratères (taille max de la base de données)
+            if(strlen($contenuArticleModifie)<65000){
+                $articleAModifier->setContenuArticle($contenuArticleModifie);
         
-            $em->persist($itemToModify);
-            $em->flush();
+                $entityManager->persist($articleAModifier);
+                $entityManager->flush();
 
-            return $app->redirect($url);
-                
-           }
+                $url = $app['url_generator']->generate('admin');
+                return $app->redirect($url); 
+            }
             
         }
+
+        return $app['twig']->render('modifierArticle.twig', ['article' => $articleAModifier]);
     }
 
     public function ajoutArticle(Request $request, Application $app){

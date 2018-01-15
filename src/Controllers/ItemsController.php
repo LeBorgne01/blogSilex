@@ -85,18 +85,7 @@ class ItemsController {
     }
 
 
-     public function modifier($idArticle, Application $app) {
-       // $this->storage->removeElement($index);
-        $em = $app['em'];
-        $itemToReturn = $em->find('DUT\\Models\\Article', $idArticle);
-        
-
-        return $app['twig']->render('modifierArticle.twig',['article'=>$itemToReturn]);
-
-        
-    }
-
-     public function modifierContenuArticle($idArticle, Request $request, Application $app) {
+    public function modifierContenuArticle($idArticle, Request $request, Application $app) {
         $entityManager = $app['em'];
 
         //On récupère l'article correspondant à l'Id 

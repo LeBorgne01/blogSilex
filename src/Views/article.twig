@@ -1,4 +1,13 @@
 {% extends 'layout.twig' %}
+
+{% block title %}
+	<title>OSS Blog || Article {{article.getIdArticle()}}</title>
+{% endblock %}
+
+{% block menu %}
+	{% include 'menu.twig' %}
+{% endblock %}
+
 {% block body %}
 
 	

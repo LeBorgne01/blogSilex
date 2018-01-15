@@ -39,13 +39,7 @@ class ItemsController {
 
     }
 
-<<<<<<< HEAD
-    public function afficheArticlePage(Application $app,$index){
-         $entityManager = $app['em'];
-         $items = $entityManager->find('DUT\\Models\\Article',$index);
-        
-        return $app['twig']->render('article.twig',['article'=>$item]);
-=======
+
     public function afficheArticlePage($idArticle, Request $request, Application $app){
         $entityManager = $app['em'];
         $repository = $entityManager->getRepository('DUT\\Models\\Commentaire');
@@ -75,7 +69,6 @@ class ItemsController {
         }
         
         return $app['twig']->render('article.twig', ['article' => $article, 'commentaires' => $commentaires]);
->>>>>>> 6d449bc6eb668a0d2aab89274828a4677129aa4e
     }
 
 

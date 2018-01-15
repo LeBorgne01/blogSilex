@@ -95,11 +95,24 @@ public function deleteCommentaire($idCommentaire, Application $app) {
 
     return $app->redirect($url);
 }
-public function modererCommentaire($idCommentaire, Application $app) {
+public function modererCommentaire($idCommentaire,$raison, Application $app) {
        // $this->storage->removeElement($index);
     $em = $app['em'];
     $itemToModify = $em->find('DUT\\Models\\Commentaire', $idCommentaire);
-    $itemToModify->setContenuCommentaire("Ce commentaire à été modéré par l'administrateur.");
+   
+    
+     if ($raison=='0') {
+        $itemToModify->setContenuCommentaire("Ce commentaire à été modéré par l'administrateur.");
+    }
+    if ($raison=='1') {
+        $itemToModify->setContenuCommentaire("Ce commentaire à été modéré par l'administrateur car il à été jugé inutil.");
+    }
+     
+    
+    if ($raison=='2') {
+        $itemToModify->setContenuCommentaire("Ce commentaire à été modéré par l'administrateur car il comportait des propos injurieux et/ou discriminatoire.");
+    }
+   
     $em->persist($itemToModify);
     $em->flush();
 

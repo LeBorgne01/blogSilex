@@ -31,11 +31,11 @@ class ItemsController {
     }
 
     public function afficheAdminPage(Application $app){
-         $entityManager = $app['em'];
-        $items = $entityManager->getRepository('DUT\\Models\\Article');
-        $resultat = $items->findAll();
+       $entityManager = $app['em'];
+       $items = $entityManager->getRepository('DUT\\Models\\Article');
+       $resultat = $items->findAll();
 
-          return $app['twig']->render('admin.twig', ['articles' => $resultat]);
+       return $app['twig']->render('admin.twig', ['articles' => $resultat]);
 
     }
 
@@ -67,13 +67,13 @@ class ItemsController {
 
             return $app->redirect($idArticle);
         }
-        
+
         return $app['twig']->render('article.twig', ['article' => $article, 'commentaires' => $commentaires]);
     }
 
 
     public function deleteAction($idArticle, Application $app) {
-       // $this->storage->removeElement($index);
+        // $this->storage->removeElement($index);
         $em = $app['em'];
         $itemToRemove = $em->find('DUT\\Models\\Article', $idArticle);
         $em->remove($itemToRemove);
@@ -86,6 +86,7 @@ class ItemsController {
 
 
     public function modifierContenuArticle($idArticle, Request $request, Application $app) {
+
         $entityManager = $app['em'];
 
         //On récupère l'article correspondant à l'Id 
@@ -109,7 +110,9 @@ class ItemsController {
         }
 
         return $app['twig']->render('modifierArticle.twig', ['article' => $articleAModifier]);
+
     }
+
 
     public function ajoutArticle(Request $request, Application $app){
         $entityManager = $app['em'];
@@ -127,7 +130,7 @@ class ItemsController {
 
             //On crée un nouvel article
             $article = new Article(null, $titreArticle, $contenuArticle, $tagArticle, null);
-            
+
             //On l'insère dans la base
             $entityManager->persist($article);
             $entityManager->flush();
@@ -153,7 +156,7 @@ class ItemsController {
         if(!is_null($idCitation)){
             //On récupère la citation en question
             $citationModifiee = $repository->findOneBy(['idCitation' => $idCitation]);
-            
+
             //On lui ajoute un j'aime
             $citationModifiee->ajouterUnAime();
 
@@ -165,8 +168,7 @@ class ItemsController {
             return $app->redirect($url);
         }
 
-
-       return $app['twig']->render('citation.twig', ['citations' => $citations]);
+        return $app['twig']->render('citation.twig', ['citations' => $citations]);
     }
 
     public function ajoutCitation(Request $request, Application $app){

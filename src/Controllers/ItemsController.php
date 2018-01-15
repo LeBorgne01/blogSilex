@@ -40,7 +40,10 @@ class ItemsController {
     }
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1c8ed55da8b464ecdbf25d6d93ab810314754d96
     public function afficheArticlePage($idArticle, Request $request, Application $app){
         $entityManager = $app['em'];
         $repository = $entityManager->getRepository('DUT\\Models\\Commentaire');
@@ -70,7 +73,11 @@ class ItemsController {
         }
         
         return $app['twig']->render('article.twig', ['article' => $article, 'commentaires' => $commentaires]);
+<<<<<<< HEAD
 }
+=======
+    }
+>>>>>>> 1c8ed55da8b464ecdbf25d6d93ab810314754d96
 
 
     public function deleteAction($idArticle, Application $app) {
@@ -149,15 +156,33 @@ class ItemsController {
         return $app['twig']->render('ajouterArticle.twig');
     }
 
-    public function afficheCitationPage(Application $app){
+    public function afficheCitationPage(Request $request, Application $app){
         $entityManager = $app['em'];
 
         //On récupère les citations de la base de données
         $repository = $entityManager->getRepository('DUT\\Models\\Citation');
         $citations = $repository->findAll();
 
-        
-        return $app['twig']->render('citation.twig', ['citations' => $citations]);
+        //On récupère l'Id de la citation
+        $idCitation = $request->get("idCitation");
+
+        if(!is_null($idCitation)){
+            //On récupère la citation en question
+            $citationModifiee = $repository->findOneBy(['idCitation' => $idCitation]);
+            
+            //On lui ajoute un j'aime
+            $citationModifiee->ajouterUnAime();
+
+            //On met à jour la base de données
+            $entityManager->persist($citationModifiee);
+            $entityManager->flush();
+
+            $url = $app['url_generator']->generate('citations');
+            return $app->redirect($url);
+        }
+
+
+       return $app['twig']->render('citation.twig', ['citations' => $citations]);
     }
 
 

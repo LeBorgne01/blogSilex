@@ -40,10 +40,6 @@ class ItemsController {
     }
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 1c8ed55da8b464ecdbf25d6d93ab810314754d96
     public function afficheArticlePage($idArticle, Request $request, Application $app){
         $entityManager = $app['em'];
         $repository = $entityManager->getRepository('DUT\\Models\\Commentaire');
@@ -73,11 +69,11 @@ class ItemsController {
         }
         
         return $app['twig']->render('article.twig', ['article' => $article, 'commentaires' => $commentaires]);
-<<<<<<< HEAD
+
 }
-=======
+
     }
->>>>>>> 1c8ed55da8b464ecdbf25d6d93ab810314754d96
+
 
 
     public function deleteAction($idArticle, Application $app) {

@@ -38,9 +38,11 @@ class ItemsController {
 
     }
 
-    public function afficheArticlePage(Application $app){
+    public function afficheArticlePage(Application $app,$index){
+         $entityManager = $app['em'];
+         $items = $entityManager->find('DUT\\Models\\Article',$index);
         
-        return $app['twig']->render('article.twig');
+        return $app['twig']->render('article.twig',['article'=>$item]);
     }
 
      public function deleteAction($idArticle, Application $app) {

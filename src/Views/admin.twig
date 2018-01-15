@@ -8,7 +8,7 @@
 <ul>
 	{% for item in articles %}  
 	<li>{{ item.getTitre() }} <a href="{{app.request.basepath}}/remove/{{item.getIdArticle()}}">Supprimer</a> 
-		<a href="{{app.request.basepath}}/modifierArticle/{{item.getIdArticle()}}">Modifier</a>
+		<a href="{{app.request.basepath}}/modifier/{{item.getIdArticle()}}">Modifier</a>
 	</li>
 
 	{% endfor %}

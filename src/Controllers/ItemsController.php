@@ -69,11 +69,15 @@ class ItemsController {
         }
         
         return $app['twig']->render('article.twig', ['article' => $article, 'commentaires' => $commentaires]);
+<<<<<<< HEAD
 
 }
 
     }
 
+=======
+    }
+>>>>>>> d67e90d287acde5fed5928696ad8aee4360f98f8
 
 
     public function deleteAction($idArticle, Application $app) {

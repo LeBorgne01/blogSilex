@@ -38,12 +38,39 @@ class ItemsController {
 
     }
 
-    public function afficheArticlePage(Application $app){
+    public function afficheArticlePage($idArticle, Request $request, Application $app){
+        $entityManager = $app['em'];
+        $repository = $entityManager->getRepository('DUT\\Models\\Commentaire');
+
+        //On va chercher dans la base l'article correspondant ainsi que ses commentaires
+        $article = $entityManager->find('DUT\\Models\\Article', $idArticle);
+        $commentaires = $repository->findBy(['idArticle' => $idArticle]);
+
+        //Pour le formulaire
+        //On stock les variables des champs
+        $nomEditeur = $request->get('nomEditeur', null);
+        $contenuCommentaire = $request->get('contenuCommentaire', null);
+
+        if(!is_null($nomEditeur) && !is_null($contenuCommentaire)){
+            //On sécurise les données des champs
+            $nomEditeur = htmlspecialchars($nomEditeur);
+            $contenuCommentaire = htmlspecialchars($contenuCommentaire);
+
+            //On crée un nouveau commentaire
+            $commentaire = new Commentaire(null, $idArticle, $nomEditeur, $contenuCommentaire);
+
+            //On enregistre ce commentaire dans la base de données
+            $entityManager->persist($commentaire);
+            $entityManager->flush();
+
+            return $app->redirect($idArticle);
+        }
         
-        return $app['twig']->render('article.twig');
+        return $app['twig']->render('article.twig', ['article' => $article, 'commentaires' => $commentaires]);
     }
 
-     public function deleteAction($idArticle, Application $app) {
+
+    public function deleteAction($idArticle, Application $app) {
        // $this->storage->removeElement($index);
         $em = $app['em'];
         $itemToRemove = $em->find('DUT\\Models\\Article', $idArticle);
@@ -90,9 +117,31 @@ class ItemsController {
         }
     }
 
-    public function ajoutArticle(Application $app){
+    public function ajoutArticle(Request $request, Application $app){
+        $entityManager = $app['em'];
 
+        //On récupère les champs du formulaire
+        $titreArticle = $request->get("titreArticle", null);
+        $contenuArticle = $request->get("contenuArticle", null);
+        $tagArticle = $request->get("tagArticle", null);
 
+        if(!is_null($titreArticle) && !is_null($contenuArticle)){
+            //On sécurise les données récupérées
+            $titreArticle = htmlspecialchars($titreArticle);
+            $contenuArticle = htmlspecialchars($contenuArticle);
+            $tagArticle = htmlspecialchars($tagArticle);
+
+            //On crée un nouvel article
+            $article = new Article(null, $titreArticle, $contenuArticle, $tagArticle, null);
+            
+            //On l'insère dans la base
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+            $url = $app['url_generator']->generate('home');
+
+            return $app->redirect($url);
+        }
 
         return $app['twig']->render('ajouterArticle.twig');
     }

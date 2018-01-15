@@ -15,27 +15,39 @@ header{
 header #logoImage{
 	width: 270px;
 	height: 180px;
+	margin-left: 2%;
+	margin-top: 1%;
+	border-radius: 10px;
+}
+
+header h1#titrePrincipal{
+	display: inline-block;
+	margin-left: 10%;
 
 }
 
-header #titrePrincipal{
-	
+#main{
+	max-width: 100%;
+	min-height: 500px;
+	background-color: lightgray;
 }
 
-nav.menu-cote{
+nav#menu-cote{
 	float: left;
-	width: 10%;
-	height: 100%;
-	position: sticky;
-	background-color: lightblue;
+	width: 225px;
+	background-color: #FF3366;
+	min-height: 500px;
 	padding: 10px;
 }
 
-div.contenu{
-	position: relative;
-	float: left;
-	display: block;
-	background-color: red;
-	width: 87.5%;
-	padding: 10px;
+div#contenu{
+	margin-left: 245px;
+	background-color: #9966FF;
+	min-height: 500px;
+	padding: 15px;
+}
+
+div.commentaire{
+	margin-bottom: 5px;
+	border: solid black 1px;
 }

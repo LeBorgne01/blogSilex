@@ -1,20 +1,33 @@
 {% extends 'layout.twig' %}
-{% block body %}
+
+{% block title %}
+	<title>OSS Blog || Article {{article.getIdArticle()}}</title>
+{% endblock %}
+
+{% block menu %}
 	{% include 'menu.twig' %}
+{% endblock %}
+
+{% block body %}
+
+	
 	<h1>{{article.getTitre()}}</h1>
 	<p>{{article.getContenuArticle()}}</p>
 
 	{% for commentaire in commentaires %}
 
-		<p>{{commentaire.getNomEditeur()}}</p>
-		<p>{{commentaire.getContenuCommentaire()}}</p>
-
+		<div class="commentaire">
+			<p class="nomEditeurCommentaire">{{commentaire.getNomEditeur()}}</p>
+			<p class="contenuCommentaire">{{commentaire.getContenuCommentaire()}}</p>
+		</div>
+			
 	{% endfor %}
 
-	<form id="" action="">
+	<form id="" action="" method="post">
 		<input type="text" name="nomEditeur" placeholder="Votre nom"><br>
-		<input type="text" name="contenuCommentaire" placeholder="Votre commentaire"><br>
-		<input type="submit">
+		<textarea type="text" name="contenuCommentaire" placeholder="Votre commentaire"></textarea><br>
+		<input type="submit" value="Commentez">
 	</form>
 	
+
 {% endblock %}

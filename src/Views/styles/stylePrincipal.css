@@ -1,0 +1,53 @@
+@charset "UTF-8"; 
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+header{
+	width: 100%;
+	/*height: 70px;*/
+	position: sticky;
+	background-color: yellow;
+}
+
+header #logoImage{
+	width: 270px;
+	height: 180px;
+	margin-left: 2%;
+	margin-top: 1%;
+	border-radius: 10px;
+}
+
+header h1#titrePrincipal{
+	display: inline-block;
+	margin-left: 10%;
+
+}
+
+#main{
+	max-width: 100%;
+	min-height: 500px;
+	background-color: lightgray;
+}
+
+nav#menu-cote{
+	float: left;
+	width: 225px;
+	background-color: #FF3366;
+	min-height: 500px;
+	padding: 10px;
+}
+
+div#contenu{
+	margin-left: 245px;
+	background-color: #9966FF;
+	min-height: 500px;
+	padding: 15px;
+}
+
+div.commentaire{
+	margin-bottom: 5px;
+	border: solid black 1px;
+}

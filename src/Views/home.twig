@@ -1,7 +1,17 @@
 {% extends 'layout.twig' %}
+
+{% block title %}
+	<title>OSS Blog</title>
+{% endblock %}
+
+{% block menu %}
+    {% include 'menu.twig' %}
+{% endblock %}
+
 {% block body %}
-	{% include 'menu.twig' %}
+	
 	<h1>Bienvenue sur le site</h1>
+	
 	<ul>
 		{% for article in articles %}
 			<li>
@@ -9,4 +19,5 @@
 			</li>
 		{% endfor %}
 	</ul>
+	
 {% endblock %}

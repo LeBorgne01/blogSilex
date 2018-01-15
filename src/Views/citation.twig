@@ -1,0 +1,27 @@
+ {% extends 'layout.twig' %}
+
+ {% block title %}
+     <title>OSS Blog || Citations</title>
+ {% endblock %}
+
+ {% block menu %}
+     {% include 'menu.twig' %}
+ {% endblock %}
+
+ {% block body %}
+
+ 	{% for citation in citations %}
+ 		<div class="citations">
+ 			<h1>{{citation.getContenuCitation()}}</h1>
+
+ 			<iframe width="420" height="315" src="{{citation.getLienVideo()}}"> </iframe>
+
+ 			{% if citation.getNombreAime() > 1 %}
+ 				<p>{{citation.getNombreAime()}} aimes</p>
+ 			{% else %}
+ 			    <p>{{citation.getNombreAime()}} aime</p>
+ 			{% endif %}
+ 		</div> 
+ 	{% endfor %}
+    
+ {% endblock %}

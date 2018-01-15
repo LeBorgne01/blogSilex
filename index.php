@@ -43,14 +43,22 @@ $app->post('/article/{idArticle}', 'DUT\\Controllers\\ItemsController::afficheAr
 
 $app->get('/remove/{idArticle}', 'DUT\\Controllers\\ItemsController::deleteAction');
 
+
+$app->get('/ajout_article', 'DUT\\Controllers\\ItemsController::ajoutArticle')
+    ->bind('ajout_article');
+$app->post('/ajout_article', 'DUT\\Controllers\\ItemsController::ajoutArticle');
+
 $app->get('/modifier/{idArticle}', 'DUT\\Controllers\\ItemsController::modifier');
 
-$app->get('/modifier/{idArticle}', function()use($app){
+/*$app->get('/modifier/{idArticle}', function()use($app){
      return $app['twig']->render('modifierArticle.twig');
 
-});
+});*/
 
 $app->post('/modifier/{idArticle}', 'DUT\\Controllers\\ItemsController::modifierContenuArticle');
+
+$app->get('/citations', 'DUT\\Controllers\\ItemsController::afficheCitationPage');
+
 
 $app['debug'] = true;
 $app->run();

@@ -1,0 +1,22 @@
+{% extends 'layout.twig' %}
+{% block title %}
+	<title>OSS Blog || Ajout d'un article</title>
+{% endblock %}
+
+{% block menu %}
+    {% include 'menu.twig' %}
+{% endblock %}
+
+{% block body %}
+	
+	<p>Ajoutez votre article :</p>
+
+	<form id="formAjoutArticle" action="" method="post" enctype="multipart/form-data">
+		<input type="text" name="titreArticle" placeholder="Titre de l'article"><br>
+		<textarea name="contenuArticle" placeholder="Entrez votre article"></textarea><br>
+		<input type="text" name="tagArticle" placeholder="Tags associés à vos articles"><br>
+		{#<input type="file" name="lienPhoto" placeholder="Lien de votre photo"><br>#}
+		<input type="submit">
+	</form>
+
+{% endblock %}

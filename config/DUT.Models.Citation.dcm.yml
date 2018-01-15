@@ -1,0 +1,28 @@
+DUT\Models\Citation:
+  type: entity
+  table: citation
+
+  id:
+    idCitation:
+      type: integer
+      generator:
+        strategy: auto
+
+  fields:
+    contenuCitation:
+      type: string
+      lenght: 500
+      column: contenuCitation
+      nullable: false
+
+    lienVideo:
+      type: string
+      lenght: 500
+      column: lienVideo
+      nullable: false
+
+    nombreAime:
+      type: integer
+      lenght: 11
+      column: nombreAime
+      nullable: false

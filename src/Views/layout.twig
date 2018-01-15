@@ -1,11 +1,48 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-	<title>OSS Blog</title>
-	<link rel="stylesheet" type="text/css" href="{{app.request.basepath}}/src/style/style.css">
+	{% block title %}{% endblock %}
+
+	<!-- styles -->
+	<link rel="stylesheet" href="{{app.request.basepath}}/src/Views/styles/bootstrap.min.css">
+	<link rel="stylesheet" href="{{app.request.basepath}}/src/Views/styles/stylePrincipal.css">
+	<!-- fin styles -->
+
 </head>
+
+<!-- contenu du site -->
+
 <body>
-	{% block menu %}{% endblock %}
-	{% block body %}{% endblock %}
+
+	<!-- header -->
+	<header>
+		{# <p>Je suis le header</p> #}
+			
+		<img id="logoImage" src="{{app.request.basepath}}/src/Views/pictures/logoImage.jpg"/>
+		<h1 id="titrePrincipal">Blog OSS 117</h1>
+	
+	</header>
+	<!-- fin header -->
+
+	<!-- menu -->
+	<nav class="menu-cote">
+		{% include 'menu.twig' %}
+	</nav>
+	<!-- fin menu -->
+
+	<!-- contenu -->
+	<div class="contenu">
+			{% block body %}{% endblock %}
+	</div>
+	<!-- fin contenu -->
+
+	{#
+	<!-- footer -->
+	<footer class="container-fluid footer">
+		<p>Je suis le footer</p>
+	</footer>
+	<!-- fin footer -->
+	#}
+
 </body>
 </html>

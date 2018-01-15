@@ -43,5 +43,7 @@ $app->post('/article/{idArticle}', 'DUT\\Controllers\\ItemsController::afficheAr
 
 $app->get('/remove/{idArticle}', 'DUT\\Controllers\\ItemsController::deleteAction');
 
+$app->get('/ajout_article', 'DUT\\Controllers\\ItemsController::ajoutArticle');
+
 $app['debug'] = true;
 $app->run();

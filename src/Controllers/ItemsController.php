@@ -119,5 +119,12 @@ class ItemsController {
         
     }
 
+    public function ajoutArticle(Application $app){
+
+
+
+        return $app['twig']->render('ajouterArticle.twig');
+    }
+
 
 }

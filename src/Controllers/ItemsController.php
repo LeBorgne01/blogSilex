@@ -146,5 +146,10 @@ class ItemsController {
         return $app['twig']->render('ajouterArticle.twig');
     }
 
+    public function afficheCitationPage(Application $app){
+
+        return $app['twig']->render('citation.twig');
+    }
+
 
 }

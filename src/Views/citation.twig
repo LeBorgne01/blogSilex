@@ -21,6 +21,11 @@
  			{% else %}
  			    <p>{{citation.getNombreAime()}} aime</p>
  			{% endif %}
+
+ 			<form method="post">
+ 				<input type="hidden" name="idCitation" value="{{citation.getIdCitation()}}">
+ 				<input type="submit" value="J'aime">
+ 			</form>
  		</div> 
  	{% endfor %}
     

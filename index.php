@@ -57,7 +57,9 @@ $app->get('/modifier/{idArticle}', 'DUT\\Controllers\\ItemsController::modifier'
 
 $app->post('/modifier/{idArticle}', 'DUT\\Controllers\\ItemsController::modifierContenuArticle');
 
-$app->get('/citations', 'DUT\\Controllers\\ItemsController::afficheCitationPage');
+$app->get('/citations', 'DUT\\Controllers\\ItemsController::afficheCitationPage')
+    ->bind('citations');
+$app->post('/citations', 'DUT\\Controllers\\ItemsController::afficheCitationPage');
 
 
 $app['debug'] = true;

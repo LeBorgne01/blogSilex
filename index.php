@@ -61,6 +61,10 @@ $app->get('/citations', 'DUT\\Controllers\\ItemsController::afficheCitationPage'
     ->bind('citations');
 $app->post('/citations', 'DUT\\Controllers\\ItemsController::afficheCitationPage');
 
+$app->get('/ajout_citation', 'DUT\\Controllers\\ItemsController::ajoutCitation')
+    ->bind('ajout_citation');
+$app->post('/ajout_citation', 'DUT\\Controllers\\ItemsController::ajoutCitation');
+
 
 $app['debug'] = true;
 $app->run();

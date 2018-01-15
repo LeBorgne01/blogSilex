@@ -177,5 +177,36 @@ class ItemsController {
        return $app['twig']->render('citation.twig', ['citations' => $citations]);
     }
 
+    public function ajoutCitation(Request $request, Application $app){
+        $entityManager = $app['em'];
+
+        //On récupère les champs du formulaire
+        $contenuCitation = $request->get('contenuCitation', null);
+        $lienVideoCitation = $request->get('lienVideoCitation', null);
+
+        if(!is_null($contenuCitation) && !is_null($lienVideoCitation)){
+            //On sécurise les données récupérées
+            $contenuCitation = htmlspecialchars($contenuCitation);
+            $lienVideoCitation = htmlspecialchars($lienVideoCitation);
+
+            //On récupère l'id de la vidéo youtube (méthode simple sans vérification d'url)
+            $lienVideoCitation = explode('=', $lienVideoCitation);
+            $lienVideoCitation = "https://www.youtube.com/embed/".$lienVideoCitation[1];
+
+            //On crée une nouvelle citation
+            $nouvelleCitation = new Citation(null,$contenuCitation,$lienVideoCitation,0);
+
+            //On l'ajoute à la base de données
+            $entityManager->persist($nouvelleCitation);
+            $entityManager->flush();
+
+            $url = $app['url_generator']->generate('citations');
+            return $app->redirect($url);
+        }
+
+
+        return $app['twig']->render('ajouterCitation.twig');
+    }
+
 
 }

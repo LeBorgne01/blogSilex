@@ -82,26 +82,93 @@ class ItemsController {
         $titreArticle = $request->get("titreArticle", null);
         $contenuArticle = $request->get("contenuArticle", null);
         $tagArticle = $request->get("tagArticle", null);
+        
+
+        //On déclare une erreur pour le fichier du formulaire
+        $erreur = "";
 
         if(!is_null($titreArticle) && !is_null($contenuArticle)){
             //On sécurise les données récupérées
             $titreArticle = htmlspecialchars($titreArticle);
             $contenuArticle = htmlspecialchars($contenuArticle);
             $tagArticle = htmlspecialchars($tagArticle);
+            $fichier = $_FILES['lienPhoto'];
 
-            //On crée un nouvel article
-            $article = new Article(null, $titreArticle, $contenuArticle, $tagArticle, null);
+            //On vérifie le fichier
+            //On vérifie si un fichier a été uploadé
+            if(!$fichier['error'] == 4){
 
-            //On l'insère dans la base
-            $entityManager->persist($article);
-            $entityManager->flush();
+                //On vérifie les erreurs de transfert
+                if($fichier['error'] > 0){
+                    $erreur = "Erreur lors du transfert de la photo";
+                }
+                else{
 
-            //On redirige vers la page 'home'
-            $url = $app['url_generator']->generate('home');
-            return $app->redirect($url);
+                    //On vérifie la taille du fichier (doit être inférieure à 10 Mo)
+                    if($fichier['size'] > 10000000){
+                        $erreur = "Le fichier est trop gros";
+                    }
+                    else{
+
+                        //On vérifie si le fichier est bien une image
+                        $extensionsValides = array('jpg', 'jpeg', 'gif', 'png');
+
+                        //strrchr renvoie l'extension du fichier avec le point
+                        //substr ignore le point (1er caractère de la chaine)
+                        //strtolower met l'extension en minuscule
+                        $extensionUpload = strtolower( substr( strrchr($fichier['name'], '.'), 1));
+
+                        if(!in_array($extensionUpload, $extensionsValides)){
+                            $erreur = "Votre fichier n'est pas une image";
+                        }
+                        else{
+                            //On déplace le fichier dans le dossier pictures du site
+
+                            //On met un nom pseudo aléatoire comme nom du fichier (Façon simple de mettre un nom unique sur chaque image)
+                            $nomFichier = substr($fichier['tmp_name'], 17);
+                            $nomFichier = explode('.',$nomFichier);
+                            $nomFichier = $nomFichier[0];
+
+                            //On récupère la route absolue du site
+                            $routeAbsolue = substr(__DIR__, 0,24);
+
+                            //Déplacement du fichier
+                            $nomDestination = $routeAbsolue.'src\\Views\\pictures\\'.$nomFichier.'.'.$extensionUpload;
+
+
+                            $resultatTransfert = move_uploaded_file($fichier['tmp_name'],$nomDestination);
+
+                            if(!$resultatTransfert){
+                                $erreur = "Echec du transfert";
+                            }
+                            else{
+                                //On crée un nouvel article avec photo
+                                $article = new Article(null, $titreArticle, $contenuArticle, $tagArticle, $nomDestination);
+
+                                //On l'insère dans la base
+                                $entityManager->persist($article);
+                                $entityManager->flush();
+                            }                            
+                        }
+                    }
+                }
+            }
+            else{
+                //On crée un nouvel article
+                $article = new Article(null, $titreArticle, $contenuArticle, $tagArticle, null);
+
+                //On l'insère dans la base
+                $entityManager->persist($article);
+                $entityManager->flush();
+
+                //On redirige vers la page 'home'
+                $url = $app['url_generator']->generate('home');
+                return $app->redirect($url);
+            }
+            
         }
 
-        return $app['twig']->render('ajouterArticle.twig');
+        return $app['twig']->render('ajouterArticle.twig', ['erreur' => $erreur]);
     }
 
     

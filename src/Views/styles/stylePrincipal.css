@@ -37,6 +37,7 @@ nav#menu-cote{
 	width: 225px;
 	background-color: #FF3366;
 	min-height: 500px;
+	height: 100%;
 	padding: 10px;
 }
 

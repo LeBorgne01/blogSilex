@@ -225,7 +225,9 @@ class ItemsController {
 
         //On récupère les citations de la base de données
         $repository = $entityManager->getRepository('DUT\\Models\\Citation');
-        $citations = $repository->findAll();
+        //$citations = $repository->findAll();
+        //On récupère les citations par ordre decroissant de 'j'aime'
+        $citations = $repository->findBy([], ['nombreAime' => 'desc']);
 
         //On récupère l'Id de la citation
         $idCitation = $request->get("idCitation");

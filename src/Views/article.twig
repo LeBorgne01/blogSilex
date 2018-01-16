@@ -13,7 +13,11 @@
 	
 	<h1>{{article.getTitre()}}</h1>
 
-	<img src="{{app.request.basepath}}/src/Views/{{article.getLienPhoto()}}">
+	{% if article.getLienPhoto() != null %}
+		<img src="{{app.request.basepath}}/src/Views/{{article.getLienPhoto()}}">
+	{% endif %}
+
+	
 	<p>{{article.getContenuArticle()}}</p>
 
 	{% for commentaire in commentaires %}

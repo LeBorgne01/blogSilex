@@ -17,9 +17,11 @@ class ItemsController {
 
     protected $storage;
     protected $entityManager;
+    private $routeAbsolue;
 
     public function __construct() {
         $this->storage = new SessionStorage();
+        $this->routeAbsolue = substr(__DIR__, 0,24);
     }
 
     //
@@ -129,11 +131,10 @@ class ItemsController {
                             $nomFichier = explode('.',$nomFichier);
                             $nomFichier = $nomFichier[0];
 
-                            //On récupère la route absolue du site
-                            $routeAbsolue = substr(__DIR__, 0,24);
-
                             //Déplacement du fichier
-                            $nomDestination = $routeAbsolue.'src\\Views\\pictures\\'.$nomFichier.'.'.$extensionUpload;
+                            $nomFichierComplet  = $nomFichier.'.'.$extensionUpload;
+                            $nomFichierBase = "pictures/".$nomFichierComplet;
+                            $nomDestination = $this->routeAbsolue.'src\\Views\\pictures\\'.$nomFichier.'.'.$extensionUpload;
 
 
                             $resultatTransfert = move_uploaded_file($fichier['tmp_name'],$nomDestination);
@@ -143,7 +144,7 @@ class ItemsController {
                             }
                             else{
                                 //On crée un nouvel article avec photo
-                                $article = new Article(null, $titreArticle, $contenuArticle, $tagArticle, $nomDestination);
+                                $article = new Article(null, $titreArticle, $contenuArticle, $tagArticle, $nomFichierBase);
 
                                 //On l'insère dans la base
                                 $entityManager->persist($article);
@@ -265,6 +266,13 @@ class ItemsController {
 
         //On va chercher l'article correspondant dans la base
         $articleToRemove = $entityManager->find('DUT\\Models\\Article', $idArticle);
+
+        //On supprime la photo si il y en a une
+        $lienPhoto = $articleToRemove->getLienPhoto();
+
+        if(!is_null($lienPhoto)){
+            unlink($this->routeAbsolue.'src/Views/'.$lienPhoto);
+        }
 
         //On supprime cet article
         $entityManager->remove($articleToRemove);

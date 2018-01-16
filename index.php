@@ -62,6 +62,9 @@ $app->get('/ajout_citation', 'DUT\\Controllers\\ItemsController::ajoutCitation')
     ->bind('ajout_citation');
 $app->post('/ajout_citation', 'DUT\\Controllers\\ItemsController::ajoutCitation');
 
+$app->get('/admin/citations','DUT\\Controllers\\ItemsController::modererCitations')
+    ->bind("moderer_citations");
+$app->post('/admin/citations','DUT\\Controllers\\ItemsController::modererCitations');
 
 $app['debug'] = true;
 $app->run();

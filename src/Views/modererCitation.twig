@@ -1,0 +1,34 @@
+{% extends 'layout.twig' %}
+
+{% block title %}
+	<title>OSS Blog || Modération Citations</title>
+{% endblock %}
+
+{% block menu %}
+    {% include 'menuAdmin.twig' %}
+{% endblock %}
+
+
+{% block body %}
+
+
+
+<h1>Modération citations</h1>
+
+<ul>
+	{% for citation in citations %}  
+	<li>{{ citation.getContenuCitation()}}
+
+		<form method="POST">
+
+		<input type="hidden" name="idCitation" value="{{ citation.getIdCitation()}}">
+		<input type="submit" name="" value="Supprimer">
+		</form>
+	</li>
+
+	{% endfor %}
+	
+</ul> 
+
+
+{% endblock %}

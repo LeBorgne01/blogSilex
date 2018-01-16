@@ -122,6 +122,28 @@ class ItemsController {
         return $app->redirect($url);
     }
 
+    public function modererCitations(Request $request, Application $app) {
+        $entityManager = $app['em'];
+        $repository = $entityManager->getRepository('DUT\\Models\\Citation');
+       
+        $citations= $repository->findAll();
+
+        $idCitation = $request->get('idCitation');
+
+        if(!is_null($idCitation)){
+            $citation=$repository->findOneBy(["idCitation"=>$idCitation]);
+            $entityManager->remove($citation);
+            $entityManager->flush();
+
+            $url = $app['url_generator']->generate('moderer_citations');
+             return $app->redirect($url); 
+
+        }
+      
+        
+         return $app['twig']->render('modererCitation.twig',['citations'=>$citations]);
+        }
+
     public function modifier($idArticle, Application $app) {
         // $this->storage->removeElement($index);
         $em = $app['em'];

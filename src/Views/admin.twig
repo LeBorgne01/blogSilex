@@ -13,11 +13,11 @@
 
 {#{% include 'menu.twig' %}#}
 
-<h1>Modération</h1>
+<h1>Modération article</h1>
 
 <ul>
 	{% for item in articles %}  
-	<li>{{ item.getContenuArticle()}} <a href="{{app.request.basepath}}/remove/{{item.getIdArticle()}}">Supprimer</a> 
+	<li>{{ item.getTitre()}} <a href="{{app.request.basepath}}/remove/{{item.getIdArticle()}}">Supprimer</a> 
 		<a href="{{app.request.basepath}}/modifier/{{item.getIdArticle()}}">Modifier</a>
 	</li>
 

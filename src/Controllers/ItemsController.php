@@ -22,24 +22,25 @@ class ItemsController {
         $this->storage = new SessionStorage();
     }
 
+    //
+    // Pages du site visiteur
+    //
+    
+    
+    //Fonction pour afficher la homePage
     public function afficheHomePage(Application $app) {
         $entityManager = $app['em'];
+
+        //On va chercher les articles dans la base de données
         $research = $entityManager->getRepository('DUT\\Models\\Article');
         $articles = $research->findAll();
 
+        //On affiche la page 'home' avec ces articles
         return $app['twig']->render('home.twig', ['articles' => $articles]);
     }
 
-    public function afficheAdminPage(Application $app){
-        $entityManager = $app['em'];
-        $items = $entityManager->getRepository('DUT\\Models\\Article');
-        $resultat = $items->findAll();
-
-        return $app['twig']->render('admin.twig', ['articles' => $resultat]);
-
-    }
-
-
+    
+    //Fonction pour afficher la page d'un article
     public function afficheArticlePage($idArticle, Request $request, Application $app){
         $entityManager = $app['em'];
         $repository = $entityManager->getRepository('DUT\\Models\\Commentaire');
@@ -65,132 +66,15 @@ class ItemsController {
             $entityManager->persist($commentaire);
             $entityManager->flush();
 
+            //On redirige sur la page de ce même article
             return $app->redirect($idArticle);
         }
 
         return $app['twig']->render('article.twig', ['article' => $article, 'commentaires' => $commentaires]);
-
     }
 
-    public function deleteAction($idArticle, Application $app) {
-        // $this->storage->removeElement($index);
-        $em = $app['em'];
-        $itemToRemove = $em->find('DUT\\Models\\Article', $idArticle);
-        $em->remove($itemToRemove);
-        $em->flush();
-
-        $url = $app['url_generator']->generate('admin');
-
-        return $app->redirect($url);
-    }
-
-    public function deleteCommentaire($idCommentaire, Application $app) {
-        // $this->storage->removeElement($index);
-        $em = $app['em'];
-        $itemToRemove = $em->find('DUT\\Models\\Commentaire', $idCommentaire);
-        $em->remove($itemToRemove);
-        $em->flush();
-
-        $url = $app['url_generator']->generate('admin');
-
-        return $app->redirect($url);
-    }
-
-    public function modererCommentaire($idCommentaire,$raison, Application $app) {
-        // $this->storage->removeElement($index);
-        $em = $app['em'];
-        $itemToModify = $em->find('DUT\\Models\\Commentaire', $idCommentaire);
-        
-        
-        if ($raison=='0') {
-            $itemToModify->setContenuCommentaire("Ce commentaire à été modéré par l'administrateur.");
-        }
-        if ($raison=='1') {
-            $itemToModify->setContenuCommentaire("Ce commentaire à été modéré par l'administrateur car il à été jugé inutil.");
-        }
-        
-        
-        if ($raison=='2') {
-            $itemToModify->setContenuCommentaire("Ce commentaire à été modéré par l'administrateur car il comportait des propos injurieux et/ou discriminatoire.");
-        }
-        
-        $em->persist($itemToModify);
-        $em->flush();
-
-        $url = $app['url_generator']->generate('admin');
-
-        return $app->redirect($url);
-    }
-
-    public function modererCitations(Request $request, Application $app) {
-        $entityManager = $app['em'];
-        $repository = $entityManager->getRepository('DUT\\Models\\Citation');
-       
-        $citations= $repository->findAll();
-
-        $idCitation = $request->get('idCitation');
-
-        if(!is_null($idCitation)){
-            $citation=$repository->findOneBy(["idCitation"=>$idCitation]);
-            $entityManager->remove($citation);
-            $entityManager->flush();
-
-            $url = $app['url_generator']->generate('moderer_citations');
-             return $app->redirect($url); 
-
-        }
-      
-        
-         return $app['twig']->render('modererCitation.twig',['citations'=>$citations]);
-        }
-
-    public function modifier($idArticle, Application $app) {
-        // $this->storage->removeElement($index);
-        $em = $app['em'];
-        $itemToReturn = $em->find('DUT\\Models\\Article', $idArticle);
-
-
-        return $app['twig']->render('modifierArticle.twig',['article'=>$itemToReturn]);
-
-
-    }   
-
-
-
-    public function modifierContenuArticle($idArticle, Request $request, Application $app) {
-        $entityManager = $app['em'];
-
-        //On récupère l'article correspondant à l'Id 
-        $articleAModifier = $entityManager->find('DUT\\Models\\Article', $idArticle);
-
-        $repository = $entityManager->getRepository('DUT\\Models\\Commentaire');
-        $commentaires = $repository->findBy(['idArticle' => $idArticle]);
-        //var_dump($commentaireAssocie);
-
-        //On récupère les données du formulaire
-        $contenuArticleModifie = $request->get('contenuArticle', null);
-
-        if(!is_null($contenuArticleModifie)){
-            //On regarde si le contenu de l'article est inférieur à 65000 caratères (taille max de la base de données)
-            if(strlen($contenuArticleModifie)<65000){
-                $articleAModifier->setContenuArticle($contenuArticleModifie);
-
-                $entityManager->persist($articleAModifier);
-                $entityManager->flush();
-
-                $url = $app['url_generator']->generate('admin');
-                return $app->redirect($url); 
-            }
-
-        }
-
-        return $app['twig']->render('modifierArticle.twig', ['article' => $articleAModifier, 'commentaires' => $commentaires]);
-
-    }
-
-
-
-
+    
+    //Fonction pour ajouter un article
     public function ajoutArticle(Request $request, Application $app){
         $entityManager = $app['em'];
 
@@ -212,14 +96,16 @@ class ItemsController {
             $entityManager->persist($article);
             $entityManager->flush();
 
+            //On redirige vers la page 'home'
             $url = $app['url_generator']->generate('home');
-
             return $app->redirect($url);
         }
 
         return $app['twig']->render('ajouterArticle.twig');
     }
 
+    
+    //Fonction pour afficher la page 'citations'
     public function afficheCitationPage(Request $request, Application $app){
         $entityManager = $app['em'];
 
@@ -243,14 +129,16 @@ class ItemsController {
             $entityManager->persist($citationModifiee);
             $entityManager->flush();
 
+            //On redirige sur la page 'citations'
             $url = $app['url_generator']->generate('citations');
             return $app->redirect($url);
         }
 
-
         return $app['twig']->render('citation.twig', ['citations' => $citations]);
     }
 
+    
+    //Fonction pour ajouter une citation
     public function ajoutCitation(Request $request, Application $app){
         $entityManager = $app['em'];
 
@@ -274,13 +162,189 @@ class ItemsController {
             $entityManager->persist($nouvelleCitation);
             $entityManager->flush();
 
+            //On redirige sur la page 'citations'
             $url = $app['url_generator']->generate('citations');
             return $app->redirect($url);
         }
 
-
         return $app['twig']->render('ajouterCitation.twig');
     }
 
+    //
+    //Fin pages site visiteur
+    //
 
+    //
+    //Pages administrations
+    //
+
+
+    //Fonction pour afficher la page 'admin' avec les articles
+    public function afficheAdminPage(Application $app){
+        $entityManager = $app['em'];
+
+        //On va chercher les articles dans la base de données
+        $repository = $entityManager->getRepository('DUT\\Models\\Article');
+        $resultat = $repository->findAll();
+
+        //On charge la page avec ces articles
+        return $app['twig']->render('admin.twig', ['articles' => $resultat]);
+    }
+
+
+    //Fonction pour supprimer un article
+    public function deleteAction($idArticle, Application $app) {
+        $entityManager = $app['em'];
+
+        //On va chercher l'article correspondant dans la base
+        $articleToRemove = $entityManager->find('DUT\\Models\\Article', $idArticle);
+
+        //On supprime cet article
+        $entityManager->remove($articleToRemove);
+
+        //On va chercher les commentaires correspondant à l'article
+        $repository = $entityManager->getRepository('DUT\\Models\\Commentaire');
+        $commentairesASupprimer = $repository->findBy(['idArticle' => $idArticle]);
+
+        //On supprime ces commentaires
+        foreach ($commentairesASupprimer as $commentaireASupprimer) {
+            $entityManager->remove($commentaireASupprimer);
+        }
+        
+        //On met à jour la base de données
+        $entityManager->flush();
+
+        //On redirige vers la page admin
+        $url = $app['url_generator']->generate('admin');
+        return $app->redirect($url);
+    }
+
+
+    //Fonction pour supprimer un commentaire
+    public function deleteCommentaire($idCommentaire, Application $app) {
+        $entityManager = $app['em'];
+
+        //On récupère le commentaire correspondant dans la base de données
+        $itemToRemove = $entityManager->find('DUT\\Models\\Commentaire', $idCommentaire);
+
+        //On supprime ce commentaire de la base de données
+        $entityManager->remove($itemToRemove);
+        $entityManager->flush();
+
+        //On redirige vers la page "admin"
+        $url = $app['url_generator']->generate('admin');
+        return $app->redirect($url);
+    }
+
+
+    //Fonction pour modérer les commentaires
+    public function modererCommentaire($idCommentaire,$raison, Application $app) {
+        $entityManager = $app['em'];
+
+        //On va chercher dans la base le commentaire à modérer
+        $itemToModify = $entityManager->find('DUT\\Models\\Commentaire', $idCommentaire);
+        
+        //Si on a choisi l'option "modéré" => 0
+        //Si on a choisi l'option "commentaire inutile" => 1
+        //Si on a choisi l'option "commentaire raciste" => 2
+        //On modifie le commentaire en conséquence
+        if ($raison=='0') {
+            $itemToModify->setContenuCommentaire("Ce commentaire à été modéré par l'administrateur.");
+        }
+        if ($raison=='1') {
+            $itemToModify->setContenuCommentaire("Ce commentaire à été modéré par l'administrateur car il à été jugé inutil.");
+        }
+        if ($raison=='2') {
+            $itemToModify->setContenuCommentaire("Ce commentaire à été modéré par l'administrateur car il comportait des propos injurieux et/ou discriminatoire.");
+        }
+        
+        //On modifie le commentaire dans la base de données
+        $entityManager->persist($itemToModify);
+        $entityManager->flush();
+
+        //On redirige vers la page "admin"
+        $url = $app['url_generator']->generate('admin');
+        return $app->redirect($url);
+    }
+
+
+    //Fonction pour modérer les citations (les supprimées ici car on n'a que ce choix)
+    public function modererCitations(Request $request, Application $app) {
+        $entityManager = $app['em'];
+
+        //On récupère toutes les citations
+        $repository = $entityManager->getRepository('DUT\\Models\\Citation');
+        $citations= $repository->findAll();
+
+        //On récupère l'id de la citation à supprimée
+        $idCitation = $request->get('idCitation');
+
+        if(!is_null($idCitation)){
+            //On va chercher dans la base la citation correspondante
+            $citation=$repository->findOneBy(["idCitation"=>$idCitation]);
+
+            //On supprime la citation de la base de données
+            $entityManager->remove($citation);
+            $entityManager->flush();
+
+            //On redirige sur cette même page
+            $url = $app['url_generator']->generate('moderer_citations');
+            return $app->redirect($url); 
+        }
+      
+        return $app['twig']->render('modererCitation.twig',['citations'=>$citations]);
+    }
+
+
+    //Fonction ??
+    public function modifier($idArticle, Application $app) {
+        // $this->storage->removeElement($index);
+        $em = $app['em'];
+        $itemToReturn = $em->find('DUT\\Models\\Article', $idArticle);
+
+
+        return $app['twig']->render('modifierArticle.twig',['article'=>$itemToReturn]);
+
+
+    }   
+
+
+    //Fonction pour modifier le contenu d'un article 
+    public function modifierContenuArticle($idArticle, Request $request, Application $app) {
+        $entityManager = $app['em'];
+
+        //On récupère l'article correspondant à l'Id 
+        $articleAModifier = $entityManager->find('DUT\\Models\\Article', $idArticle);
+
+        //On récupère tous les commentaires liés à l'article récupéré
+        $repository = $entityManager->getRepository('DUT\\Models\\Commentaire');
+        $commentaires = $repository->findBy(['idArticle' => $idArticle]);
+        
+        //On récupère les données du formulaire
+        $contenuArticleModifie = $request->get('contenuArticle', null);
+
+        if(!is_null($contenuArticleModifie)){
+            //On regarde si le contenu de l'article est inférieur à 65000 caratères (taille max de la base de données)
+            if(strlen($contenuArticleModifie)<65000){
+                //Si oui
+                //On modifie le contenu de l'article 
+                $articleAModifier->setContenuArticle($contenuArticleModifie);
+
+                //On met à jour la Base de données
+                $entityManager->persist($articleAModifier);
+                $entityManager->flush();
+
+                //On charge la page admin
+                $url = $app['url_generator']->generate('admin');
+                return $app->redirect($url); 
+            }
+
+        }
+
+        return $app['twig']->render('modifierArticle.twig', ['article' => $articleAModifier, 'commentaires' => $commentaires]);
+    }
+
+    //
+    //Fin page administration
+    //
 }

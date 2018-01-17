@@ -6,10 +6,11 @@
 }
 
 header{
-	width: 100%;
+	width: 99.9%;
 	/*height: 70px;*/
 	position: sticky;
-	background-color: yellow;
+	background-color: #e6e6e6;
+	border: solid 1px #5d5d5d;
 }
 
 header #logoImage{
@@ -35,20 +36,95 @@ header h1#titrePrincipal{
 nav#menu-cote{
 	float: left;
 	width: 225px;
-	background-color: #FF3366;
+	background-color: #D8D8D8;
 	min-height: 500px;
 	height: 100%;
 	padding: 10px;
+	border: solid 1px #626262;
+}
+
+nav#menu-cote li{
+	padding-bottom: 5px;
+	padding-top: 5px;
+	background-color: #b3b3b3;
+	border: solid 1px #8d8b8b;
+	width: 100%;
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+nav#menu-cote a{
+	text-decoration: none;
+	color: #6c6c6c;
+	font-family: "Calibri";
+	width: 100%;
+	height: 100%;
+}
+
+nav#menu-cote li:hover{
+	background-color: #cfcece;
 }
 
 div#contenu{
 	margin-left: 245px;
-	background-color: #9966FF;
+	background-color: #E7E7E7;
 	min-height: 500px;
 	padding: 15px;
+	border: inset 3px #c5c5c5;
+	text-align: center;
+}
+
+div#contenu h1{
+	margin-bottom: 20px;
+	font-family: Gabriola;
+	font-size: 50px;
+	font-style: italic;
+}
+
+div#contenu li{
+	margin-bottom: 30px;
+}
+
+div#contenu li a{
+	text-decoration: none;
+	background-color: #b4a6ff;
+	border: outset 1px #8c8989;
+	border-radius: 10px;
+	padding: 10px;
+	color: #5c5c5c;
+}
+
+div#contenu li a:hover{
+	border: inset 1px #8c8989;
+}
+
+div#contenu p{
+	margin-bottom: 20px;
+	font-size: 20px;
+	font-family: Arial;
+}
+
+div#contenu form input, div#contenu form textarea{
+	margin-bottom: 10px;
+	padding: 5px;
+	border-radius: 10px;
 }
 
 div.commentaire{
 	margin-bottom: 5px;
 	border: solid black 1px;
+	text-align: left;
+	padding: 10px;
+}
+
+div.citations{
+	margin-bottom: 20px;
+}
+
+div#contenu div.commentaireModerer{
+	margin-bottom: 10px;
+}
+
+ul,li{
+	list-style-type: none;
 }

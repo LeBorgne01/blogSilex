@@ -121,8 +121,12 @@ div.citations{
 	margin-bottom: 20px;
 }
 
-div#contenu div.commentaireModerer{
-	margin-bottom: 10px;
+div#contenu li.commentaireModerer a{
+	margin-right: 5px;
+}
+
+div#contenu li.commentaireModerer p{
+	margin-top: 15px;
 }
 
 ul,li{

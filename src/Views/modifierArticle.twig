@@ -10,7 +10,6 @@
 
 {% block body %}
 
-{#{% include 'menu.twig' %}#}
 <h1>Modification du contenu de l'article</h1>
 
 <h2>{{ article.getTitre() }}</h2>
@@ -26,11 +25,12 @@
 
 	<ul>
 		{% for commentaire in commentaires %}  <br>
-		<li class="commentaireModerer">{{ commentaire.getContenuCommentaire() }}  <a href="{{app.request.basepath}}/modererCommentaire/{{commentaire.getIdCommentaire()}}0">Moderer</a> <br>
-			<a href="{{app.request.basepath}}/modererCommentaire/{{commentaire.getIdCommentaire()}}1">Commentaire inutil</a> <br>
-			<a href="{{app.request.basepath}}/modererCommentaire/{{commentaire.getIdCommentaire()}}2">Commentaire injurieux et/ou discriminatoire </a>  <br>
-			<a href="{{app.request.basepath}}/removeCommentaire/{{commentaire.getIdCommentaire()}}">Supprimer</a> <br>
-
+		<li class="commentaireModerer">{{ commentaire.getContenuCommentaire() }}  
+			<a href="{{app.request.basepath}}/modererCommentaire/{{commentaire.getIdCommentaire()}}0">Moderer</a>
+			<a href="{{app.request.basepath}}/modererCommentaire/{{commentaire.getIdCommentaire()}}1">Commentaire inutil</a>
+			<a href="{{app.request.basepath}}/modererCommentaire/{{commentaire.getIdCommentaire()}}2">Commentaire injurieux et/ou discriminatoire </a> 
+			<a href="{{app.request.basepath}}/removeCommentaire/{{commentaire.getIdCommentaire()}}">Supprimer</a>
+			<p>-------------------------------------------------------</p>
 		</li>
 
 		{% endfor %}
